@@ -1,0 +1,53 @@
+﻿@using CityPopulationService
+
+@model IEnumerable<CityData>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>City/State Population Information</h1>
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">City</h2>
+        </div>
+        <div class="col-6 text-end">
+            <a asp-controller="City" asp-action="Create" class="btn btn-primary">
+                Create New City/State
+            </a>
+        </div>
+    </div>
+</div>
+
+<br/>
+
+<table class="table table-bordered table-striped" style="width:100%">
+    <thead>
+        <tr>
+            <th>City</th>
+            <th>State</th>
+            <th>Population</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var cityData in Model)
+        {
+            <tr>
+                <td width=25%>@cityData.City</td>
+                <td width=25%>@cityData.State</td>
+                <td width=40%>@cityData.Population</td>
+                <td>
+                    <div class="w-75 btn-group" role="group">
+                        <a asp-controller="City" asp-action="Edit" asp-route-city="@cityData.City" asp-route-state="@cityData.State"
+                        class="btn btn-primary mx-2" class="bg-info bi-pencil-square">Edit</a>
+                        <a asp-controller="City" asp-action="Delete" asp-route-city="@cityData.City" asp-route-state="@cityData.State"
+                        class="btn btn-danger mx-2" class="bg-info bi-pencil-square">Delete</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
