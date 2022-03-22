@@ -1,4 +1,5 @@
-﻿using CityPopulationService;
+﻿using CityPopulationMVC.Models;
+using CityPopulationService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,13 +22,19 @@ namespace CityPopulationMVC.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(new CityModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(CityData cityData)
+        public async Task<ActionResult> Create(CityModel cityModel)
         {
+            var cityData = new CityData
+            {
+                City = cityModel.City,
+                State = cityModel.State,
+                Population = cityModel.Population
+            };
             await dataManager.create(cityData);
             return RedirectToAction(nameof(Index));
         }
